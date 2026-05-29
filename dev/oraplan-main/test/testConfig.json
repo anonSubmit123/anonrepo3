@@ -1,0 +1,8 @@
+{
+	"testName": "test_generate_execute",
+	"provider": "o3",
+	"enableHierarchy": true,
+	"technologyType": "both",
+	"singleLlmPrompt": false,
+	"semanticDecompositionAllowed": true
+}

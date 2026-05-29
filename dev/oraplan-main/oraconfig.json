@@ -1,0 +1,125 @@
+{
+    "version": 1,
+    "planners": [
+    {
+    	"base": "env.ORAPLAN_THIRD_PARTY",
+    	"pm": [
+    		{
+    			"name": "BfwsFF", 
+    			"command": ["planner/bfws/ff-version/bfws", "--domain", "", "--problem", "", "--output", ""],
+    			"insert": [2, 4, 6]
+    		},
+			{"name": "BfwsFD", "command": ["planner/bfws/fd-version/bfws.py", "", "", ""], "default":1},
+			{"name": "BfwsFD", "command": ["planner/bfws/fd-version/bfws.py", "", "", ""]},
+			{"name": "TFD", "command": ["planner/tfd/tfd-src-0.4/downward/plan", "", "", ""]},
+			{
+    			"name": "MetricFF", 
+    			"command": ["planner/Metric-FF/ff", "-o", "", "-f", "", "-P", ""],
+    			"insert": [2, 4, 6]
+    		}
+    	]
+    },
+    {
+    	"base": "env.LAPKT_PATH",
+    	"pm": [
+    		{"name": "lapktff", "command": ["/planners/ff-ffparser/ff", "", "", ""]},
+			{"name": "lapktbrfs","command": ["/planners/brfs/brfs.py", "", "", ""]},
+			{"name": "lapktdfs_plus","command": ["/planners/dfs_plus/dfs_plus.py", "", "", ""]},
+			{"name": "lapktdfs_plus_unit_cost","command": ["/planners/dfs_plus/dfs_plus_unit_cost.py", "", "", ""]},
+			{"name": "lapktrun-siw-blocks","command": ["/planners/dfs_plus/run-siw-blocks.py", "", "", ""]},
+			{"name": "lapktbfs_f","command": ["/planners/bfs_f/bfs_f.py", "", "", ""]},
+			{"name": "lapktbfs_f_unit_cost","command": ["/planners/bfs_f/bfs_f_unit_cost.py", "", "", ""]},
+			{"name": "lapktrun-bfsf-blocks","command": ["/planners/bfs_f/run-bfsf-blocks.py", "", "", ""]},
+			{"name": "lapkplannerstbfs_f-unit-cost","command": ["/planners/bfs_f/bfs_f-unit-cost.py", "", "", ""]},
+			{"name": "lapktanytime_lapkt","command": ["/planners/anytime_lapkt/anytime_lapkt.py", "", "", ""]},
+			{"name": "lapktsiw_plus_bfs_f","command": ["/planners/siw_plus-then-bfs_f/siw_plus_bfs_f.py", "", "", ""]},
+			{"name": "lapktsiw","command": ["/planners/siw/siw.py", "", "", ""]},
+			{"name": "lapktsiw-unit-cost","command": ["/planners/siw/siw-unit-cost.py", "", "", ""]},
+			{"name": "lapktrun-siw-blocks","command": ["/planners/siw/run-siw-blocks.py", "", "", ""]},
+			{"name": "lapktsiw_unit_cost","command": ["/planners/siw/siw_unit_cost.py", "", "", ""]},
+			{"name": "lapktdf_iw","command": ["/planners/delete-free-iw/df_iw.py", "", "", ""]},
+			{"name": "lapktsiw_plus_unit_cost","command": ["/planners/siw_plus/siw_plus_unit_cost.py", "", "", ""]},
+			{"name": "lapktsiw_plus_width1","command": ["/planners/siw_plus/siw_plus_width1.py", "", "", ""]},
+			{"name": "lapktsiw_plus_width1_unit_cost","command": ["/planners/siw_plus/siw_plus_width1_unit_cost.py", "", "", ""]},
+			{"name": "lapktrun-siw-blocks","command": ["/planners/siw_plus/run-siw-blocks.py", "", "", ""]},
+			{"name": "lapktsiw_plus","command": ["/planners/siw_plus/siw_plus.py", "", "", ""]},
+			{"name": "lapktrp_iw","command": ["/planners/iw_plus/rp_iw.py", "", "", ""]},
+			{"name": "lapktat_bfs_f-no-siw-no-bfs_f","command": ["/planners/at_bfs_f/at_bfs_f-no-siw-no-bfs_f.py", "", "", ""]},
+			{"name": "lapktat_bfs_f","command": ["/planners/at_bfs_f/at_bfs_f.py", "", "", ""]},
+			{"name": "lapktat_bfs_f-2-no-bfs_f","command": ["/planners/at_bfs_f/at_bfs_f-2-no-bfs_f.py", "", "", ""]},
+			{"name": "lapktat_bfs_f-2-no-siw","command": ["/planners/at_bfs_f/at_bfs_f-2-no-siw.py", "", "", ""]},
+			{"name": "lapktdf_siw","command": ["/planners/delete-free-siw/df_siw.py", "", "", ""]}
+    	]
+    }
+    ],
+    "fdrTranslators": [
+    {
+    	"base": "env.ORAPLAN_THIRD_PARTY",
+    	"xlate": [
+    		{
+    			"name": "fdsas", 
+    			"command": ["planner/downward/src/translate/translate_with_fdr.py", "--fdr-json", "", "", ""],
+    			"insert": [3, 4, 2],
+    			"default": 1
+    		}
+    	]
+    }
+    ],
+    "definitionStore": "env.HOME/tmp/oraplan",
+    "planSchedulerWorkers": 3,
+    "planning_processor": {
+    	"module_name": "plan.pddlbase",
+    	"class_name": "PddlPlanningProcessor"
+    },
+    "generator_provider": [
+        {
+            "name": "o3",
+            "provider": {
+                "module_name": "generate.generateGptSubtasks",
+                "class_name": "GPTProvider"
+            }
+        }
+    ],
+    "generationInput":
+    {
+    	"location": "env.ORAPLAN_TESTRESOURCES/oraplanInput.json",
+		"problemName": "toweredWallFort"
+	},
+    "promptInformation":
+    {
+    	"location": "env.PROMPT_LOCATION/prompts.json"
+    },
+    "subtaskLogs": {
+    	"location": "env.SUBTASK_LOG_LOCATION"
+    },
+    "outputLocation": {
+    	"basepath": "env.ORAPLAN_TESTRESOURCES",
+    	"taskName": "toweredWallFort",
+    	"namespace": "edu.oraplan.toweredWallFort",
+		"testResultJson": "env.ORAPLAN_TESTRESOURCES/output/toweredWallFort/toweredWallFortResults.json"
+    },
+	"testConfig": {
+		"location": "env.TEST_LOCATION/testConfig.json"
+	},
+    "pickleLocation": {
+    	"location": "env.ORAPLAN_TESTRESOURCES/pickles"
+    },
+    "sampleOutput": {
+    	"location": "env.ORAPLAN_TESTRESOURCES/sampleStore"
+	},
+	"planTmpGenerate": {
+		"location": "env.ORAPLAN_TESTRESOURCES/sampleStore/planGenerateTmp"
+	},
+	"humanIntervention": {
+		"prompts": ["All"]
+	},
+	"execution": {
+		"initStatePddl": null,
+		"initTaskidIndex": 1
+	},
+	"components": {
+		"GPTProvider": {
+			"factory": "env.BASE_ORAPLAN/dev/"
+		}
+	}
+}
